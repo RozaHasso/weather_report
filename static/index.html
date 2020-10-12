@@ -32,11 +32,14 @@
                 request.open('GET', 'http://localhost:8080/forecast')
                 request.send()
                 request.onload = () => {
-                    const forecast = request.response
+                const forecast = request.response
+                var latestDate = new Date(Math.max.apply(null, data.map(e => { return new Date(e.time) })));
+                var latestObject = data.filter(e => { var d = new Date(e.time); return d.getTime() == latestDate.getTime() })
 
+                var latestDate2 = new Date(Math.max.apply(null, forecast.map(e => { return new Date(e.time) })));
+                var latestObject2 = forecast.filter(e => { var d = new Date(e.time); return d.getTime() == latestDate2.getTime() })
 
-               
-                const theModel = dataModel(data, forecast)
+                const theModel = dataModel(latestObject, latestObject2)
                 const theView = view(window)
                 theView.update(theModel)
 
