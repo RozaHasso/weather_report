@@ -1,7 +1,9 @@
 export default window => {
     const document = window.document
     const table_body = document.getElementById('weather_data')
-    const table_body2 = document.getElementById('forecast_data')
+    const table_body1 = document.getElementById('forecast_data')
+    const table_body2 = document.getElementById('min_temp')
+
     const listeners = []
 
     const listen = l => listeners.push(l)
@@ -19,9 +21,7 @@ export default window => {
     }
 
     const addForecastData = p => {
-        
-
-        const  trf  = table_body2.appendChild(document.createElement('tr'))
+        const  trf  = table_body1.appendChild(document.createElement('tr'))
         trf.insertCell().appendChild(document.createTextNode(p.from))
         trf.insertCell().appendChild(document.createTextNode(p.to))
         trf.insertCell().appendChild(document.createTextNode(p.type))
@@ -33,11 +33,24 @@ export default window => {
     }
 
 
+    const addMinTempData = p => {
+        const  trm  = table_body2.appendChild(document.createElement('tr'))
+        trm.insertCell().appendChild(document.createTextNode(p.value))
+        trm.insertCell().appendChild(document.createTextNode(p.type))
+        trm.insertCell().appendChild(document.createTextNode(p.unit))
+        trm.insertCell().appendChild(document.createTextNode(p.time))
+        trm.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+
+
    
     const update = model => {
       
         model.weatherData().forEach(addData)
-        model.weatherData2().forEach(addForecastData)
+        model.forecastData().forEach(addForecastData)
+        model.mintempData().forEach(addMinTempData)
     }
     
  

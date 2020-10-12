@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Weather</title>
+    <title>Weather Wep Page</title>
     <style>
         td {
             width: 40px;
@@ -24,53 +24,91 @@
         window.init = function () {
             const request = new XMLHttpRequest()
             request.responseType = 'json';
+            //1) first query, request for weather data
             request.open('GET', 'http://localhost:8080/data')
             request.send()
             request.onload = () => {
-                
-                 const data = request.response
+
+                const data = request.response
+                //1) first query, request for forecast
                 request.open('GET', 'http://localhost:8080/forecast')
                 request.send()
+
                 request.onload = () => {
-                const forecast = request.response
-                var latestDate = new Date(Math.max.apply(null, data.map(e => { return new Date(e.time) })));
-                var latestObject = data.filter(e => { var d = new Date(e.time); return d.getTime() == latestDate.getTime() })
 
-                var latestDate2 = new Date(Math.max.apply(null, forecast.map(e => { return new Date(e.time) })));
-                var latestObject2 = forecast.filter(e => { var d = new Date(e.time); return d.getTime() == latestDate2.getTime() })
+                    const forecast = request.response
+                    //2) second query, request
+                    request.open('GET', 'http://localhost:8080/data')
+                    request.send()
+                    var latestDate = new Date(Math.max.apply(null, data.map(e => { return new Date(e.time) })));
+                    var latestData = data.filter(e => { var d = new Date(e.time); return d.getTime() == latestDate.getTime() })
 
-                const theModel = dataModel(latestObject, latestObject2)
-                const theView = view(window)
-                theView.update(theModel)
+                    var latestDate2 = new Date(Math.max.apply(null, forecast.map(e => { return new Date(e.time) })));
+                    var latestData = forecast.filter(e => { var d = new Date(e.time); return d.getTime() == latestDate2.getTime() })
 
+
+                    request.onload = () => {
+
+                        const last5MinTempData = request.response
+                        const for5Days = () => {
+                            const date = new Date();
+                            const ts = date.getTime();
+                            const fiveDays = ts - (6 * 24 * 60 * 60 * 1000);
+                            return new Date(fiveDays)
+                        }
+                        const last5daysObject = last5MinTempData.filter(e => { var d = new Date(e.time); return d.getDate() > for5Days().getDate() })
+                        const temp = last5daysObject.filter(t => t.type === 'temperature')
+                        const final = temp.reduce((op, { value, type, unit, time, place }) => {
+                            const [date] = time.split('T', 1)
+                            op[date] = op[date] || { value: Infinity, type, unit, time, place }
+                            op[date].value = op[date].value > value ? value : op[date].value
+                            return op
+                        }, {})
+
+                        console.log(Object.values(final))
+
+
+                        const theModel = dataModel(latestData, latestData, Object.values(final))
+                        const theView = view(window)
+                        theView.update(theModel)
+                    }
+
+                }
             }
+
+            /* window.init = function () {
+ 
+                const request = new XMLHttpRequest()
+                request.open('GET', 'http://localhost:8080/data')
+                request.responseType = 'json';
+                request.send()
+                request.onload = () => {
+                    const weather = request.response
+                    const for5Days = () => {
+                        const date = new Date();
+                        const ts = date.getTime();
+                        const fiveDays = ts - (5 * 24 * 60 * 60 * 1000);
+                        return new Date(fiveDays)
+                    }
+                    const last5daysObject = weather.filter(e => { var d = new Date(e.time); return d.getDate() > for5Days().getDate() })
+                    const temp = last5daysObject.filter(t => t.type === 'temperature')
+                    const final = temp.reduce((op, { value, type, unit, time, place }) => {
+                        const [date] = time.split('T', 1)
+                        op[date] = op[date] || { value: Infinity, type, unit, time, place }
+                        op[date].value = op[date].value > value ? value : op[date].value
+                        return op
+                    }, {})
+ 
+                    console.log(Object.values(final))
+                    const theModel = dataModel(Object.values(final))
+                    const theView = view(window)
+                    theView.update(theModel)
+                }
+            }
+ */
+
         }
 
-         /* window.init = function () {
-
-             var index = ["data", "forecast"];
-             const requests = new Array(index.length);
-
-             for (let i = 0; i < index.length; i++) {
-                 var url = "http://localhost:8080/" + index[i];
-                 requests[i] = new XMLHttpRequest();
-                 requests[i].open("GET", url);
-                 requests[i].onload = function () {
-                     var data = JSON.parse(requests[i].responseText);
-
-                     var latestDate = new Date(Math.max.apply(null, data.map(e => { return new Date(e.time) })));
-                     var latestObject = data.filter(e => { var d = new Date(e.time); return d.getTime() == latestDate.getTime() })
-                     console.log(latestObject)
-                     const theModel = dataModel(latestObject)
-                     const theView = view(window)
-                     theView.update(theModel)
-                 }
-                 requests[i].send();
-             } */
-
-
-         }
- 
     </script>
 </head>
 
@@ -80,8 +118,9 @@
 
 <body onload="init()">
     <div id='base'>
-        <h1>Weather</h1>
-        <table id='weather' style="display: inline-block;">
+        <h1>Weather Wep Page</h1>
+        <h2>First Query</h2>
+        <table id='weather' style="display: inline-block;" ,>
             <thead>
                 <tr>
                     <td>value</td>
@@ -107,6 +146,21 @@
                 </tr>
             </thead>
             <tbody id='forecast_data'></tbody>
+        </table>
+
+        <h2>Second Query</h2>
+        <table id='mintemp' style="margin-top: 25px">
+            <thead>
+                <tr>
+
+                    <td>value</td>
+                    <td>type</td>
+                    <td>unit</td>
+                    <td>time</td>
+                    <td>place</td>
+                </tr>
+            </thead>
+            <tbody id='min_temp'></tbody>
         </table>
     </div>
 
