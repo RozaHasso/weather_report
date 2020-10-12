@@ -1,53 +1,104 @@
 <html>
-  <head>
-      <title>Weather</title>
-      <style>
-          td {
-              width: 40px;
-              height: 40px;
-              border: 1px solid black;
-          }
-          table {
-              border: 1px solid black;
-              border-spacing: 0;
-          }
-      </style>
-      
-      <script type = 'module' >
-        
-         import generate from '../model/generate.js'
-         import view from './view.js'
-          
-          
-          window.init = function() {
-              const request = new XMLHttpRequest()
-              request.open('GET', 'http://localhost:8080/data')
-              request.send()
-              request.onload = () => {
-                  const data = JSON.parse(request.responseText)
-               
-                      const theModel =generate(data)
-                      const theView = view(window)
-              
-                      theView.update(theModel)
-                  }
-              }
+
+<head>
+    <title>Weather</title>
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+        }
+
+        table {
+            border: 1px solid black;
+            border-spacing: 0;
+        }
+    </style>
+
+    <script type='module'>
+
+
+        import view from './view.js'
+        import dataModel from './dataModel.js'
+
+        /* window.init = function () {
+            const request = new XMLHttpRequest()
+            request.responseType = 'json';
+            request.open('GET', 'http://localhost:8080/data')
+            request.send()
+            request.onload = () => {
+                const weather = request.response
+                const theModel = dataModel(weather)
+                const theView = view(window)
+                theView.update(theModel)
+
+            } */
             
-      </script>
-  </head>
+
+         window.init = function () {
+
+             var index = ["data", "forecast"];
+             const requests = new Array(index.length);
+
+             for (let i = 0; i < index.length; i++) {
+                 var url = "http://localhost:8080/" + index[i];
+                 requests[i] = new XMLHttpRequest();
+                 requests[i].open("GET", url);
+                 requests[i].onload = function () {
+                     var data = JSON.parse(requests[i].responseText);
+
+                     var latestDate = new Date(Math.max.apply(null, data.map(e => { return new Date(e.time) })));
+                     var latestObject = data.filter(e => { var d = new Date(e.time); return d.getTime() == latestDate.getTime() })
+                     console.log(latestObject)
+                     const theModel = dataModel(latestObject)
+                     const theView = view(window)
+                     theView.update(theModel)
+                 }
+                 requests[i].send();
+             }
 
 
-
-
-  
-    <body onload="init()">
-      <div id='base'>
-          <h1>Weather</h1>
-          <table id='weather'>
-              <thead><tr><td>value</td><td>type</td><td>unit</td><td>time</td><td>place</td></tr></thead>
-              <tbody id='weather_data'></tbody>
-          </table>
-      </div>
+         }
  
-  </body>
+    </script>
+</head>
+
+
+
+
+
+<body onload="init()">
+    <div id='base'>
+        <h1>Weather</h1>
+        <table id='weather' style="display: inline-block;">
+            <thead>
+                <tr>
+                    <td>value</td>
+                    <td>type</td>
+                    <td>unit</td>
+                    <td>time</td>
+                    <td>place</td>
+                </tr>
+            </thead>
+            <tbody id='weather_data'></tbody>
+        </table>
+
+
+        <table id='forecast' style="float: right;">
+            <thead>
+                <tr>
+                    <td>from</td>
+                    <td>to</td>
+                    <td>type</td>
+                    <td>unit</td>
+                    <td>time</td>
+                    <td>place</td>
+                </tr>
+            </thead>
+            <tbody id='forecast_data'></tbody>
+        </table>
+    </div>
+
+</body>
+
 </html>
