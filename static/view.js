@@ -3,6 +3,7 @@ export default window => {
     const table_body = document.getElementById('weather_data')
     const table_body1 = document.getElementById('forecast_data')
     const table_body2 = document.getElementById('min_temp')
+    const table_body3 = document.getElementById('max_temp')
 
     const listeners = []
 
@@ -45,12 +46,25 @@ export default window => {
     }
 
 
+
+    const addMaxTempData = p => {
+        const  trma  = table_body3.appendChild(document.createElement('tr'))
+        trma.insertCell().appendChild(document.createTextNode(p.value))
+        trma.insertCell().appendChild(document.createTextNode(p.type))
+        trma.insertCell().appendChild(document.createTextNode(p.unit))
+        trma.insertCell().appendChild(document.createTextNode(p.time))
+        trma.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+
    
     const update = model => {
       
         model.weatherData().forEach(addData)
         model.forecastData().forEach(addForecastData)
         model.mintempData().forEach(addMinTempData)
+        model.maxtempData().forEach(addMaxTempData)
     }
     
  

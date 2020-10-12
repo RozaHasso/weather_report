@@ -58,17 +58,24 @@
                         }
                         const last5daysObject = last5MinTempData.filter(e => { var d = new Date(e.time); return d.getDate() > for5Days().getDate() })
                         const temp = last5daysObject.filter(t => t.type === 'temperature')
-                        const final = temp.reduce((op, { value, type, unit, time, place }) => {
+                        const finalformintemp = temp.reduce((op, { value, type, unit, time, place }) => {
                             const [date] = time.split('T', 1)
                             op[date] = op[date] || { value: Infinity, type, unit, time, place }
                             op[date].value = op[date].value > value ? value : op[date].value
                             return op
                         }, {})
 
-                        console.log(Object.values(final))
+                        const finalformaxtemp = temp.reduce((op, { value, type, unit, time, place }) => {
+                            const [date] = time.split('T', 1)
+                            op[date] = op[date] || { value: -Infinity, type, unit, time, place }
+                            op[date].value = op[date].value < value ? value : op[date].value
+                            return op
+                        }, {})
+
+                        
 
 
-                        const theModel = dataModel(latestData, latestData, Object.values(final))
+                        const theModel = dataModel(latestData, latestData, Object.values(finalformintemp), Object.values(finalformaxtemp))
                         const theView = view(window)
                         theView.update(theModel)
                     }
@@ -76,38 +83,16 @@
                 }
             }
 
-            /* window.init = function () {
- 
-                const request = new XMLHttpRequest()
-                request.open('GET', 'http://localhost:8080/data')
-                request.responseType = 'json';
-                request.send()
-                request.onload = () => {
-                    const weather = request.response
-                    const for5Days = () => {
-                        const date = new Date();
-                        const ts = date.getTime();
-                        const fiveDays = ts - (5 * 24 * 60 * 60 * 1000);
-                        return new Date(fiveDays)
-                    }
-                    const last5daysObject = weather.filter(e => { var d = new Date(e.time); return d.getDate() > for5Days().getDate() })
-                    const temp = last5daysObject.filter(t => t.type === 'temperature')
-                    const final = temp.reduce((op, { value, type, unit, time, place }) => {
-                        const [date] = time.split('T', 1)
-                        op[date] = op[date] || { value: Infinity, type, unit, time, place }
-                        op[date].value = op[date].value > value ? value : op[date].value
-                        return op
-                    }, {})
- 
-                    console.log(Object.values(final))
-                    const theModel = dataModel(Object.values(final))
-                    const theView = view(window)
-                    theView.update(theModel)
-                }
-            }
- */
-
         }
+
+        /* const final = temp.reduce((op,{value, type, unit, time, place}) => {
+            const [date] = time.split('T',1)
+            op[date] = op[date] || {value: -Infinity, type, unit, time, place}
+            op[date].value = op[date].value < value ? value : op[date].value
+            return op
+            },{}) */
+
+
 
     </script>
 </head>
@@ -161,6 +146,22 @@
                 </tr>
             </thead>
             <tbody id='min_temp'></tbody>
+        </table>
+
+
+        <h2>Third Query</h2>
+        <table id='maxtemp' style="margin-top: 25px">
+            <thead>
+                <tr>
+
+                    <td>value</td>
+                    <td>type</td>
+                    <td>unit</td>
+                    <td>time</td>
+                    <td>place</td>
+                </tr>
+            </thead>
+            <tbody id='max_temp'></tbody>
         </table>
     </div>
 
