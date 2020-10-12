@@ -21,21 +21,29 @@
         import view from './view.js'
         import dataModel from './dataModel.js'
 
-        /* window.init = function () {
+        window.init = function () {
             const request = new XMLHttpRequest()
             request.responseType = 'json';
             request.open('GET', 'http://localhost:8080/data')
             request.send()
             request.onload = () => {
-                const weather = request.response
-                const theModel = dataModel(weather)
+                
+                 const data = request.response
+                request.open('GET', 'http://localhost:8080/forecast')
+                request.send()
+                request.onload = () => {
+                    const forecast = request.response
+
+
+               
+                const theModel = dataModel(data, forecast)
                 const theView = view(window)
                 theView.update(theModel)
 
-            } */
-            
+            }
+        }
 
-         window.init = function () {
+         /* window.init = function () {
 
              var index = ["data", "forecast"];
              const requests = new Array(index.length);
@@ -55,7 +63,7 @@
                      theView.update(theModel)
                  }
                  requests[i].send();
-             }
+             } */
 
 
          }

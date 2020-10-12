@@ -37,7 +37,7 @@ export default window => {
     const update = model => {
       
         model.weatherData().forEach(addData)
-        model.weatherData().forEach(addForecastData)
+        model.weatherData2().forEach(addForecastData)
     }
     
  
