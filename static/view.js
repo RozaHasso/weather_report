@@ -4,6 +4,7 @@ export default window => {
     const table_body1 = document.getElementById('forecast_data')
     const table_body2 = document.getElementById('min_temp')
     const table_body3 = document.getElementById('max_temp')
+    const table_body4 = document.getElementById('total_pre')
 
     const listeners = []
 
@@ -58,6 +59,17 @@ export default window => {
         
     }
 
+    const addTotalPreData = p => {
+        const  trt  = table_body4.appendChild(document.createElement('tr'))
+        trt.insertCell().appendChild(document.createTextNode(p.value))
+        trt.insertCell().appendChild(document.createTextNode(p.type))
+        trt.insertCell().appendChild(document.createTextNode(p.unit))
+        trt.insertCell().appendChild(document.createTextNode(p.time))
+        trt.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+
    
     const update = model => {
       
@@ -65,6 +77,7 @@ export default window => {
         model.forecastData().forEach(addForecastData)
         model.mintempData().forEach(addMinTempData)
         model.maxtempData().forEach(addMaxTempData)
+        model.totalpreData().forEach(addTotalPreData)
     }
     
  

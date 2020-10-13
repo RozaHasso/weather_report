@@ -1,6 +1,6 @@
 const dataModel = 
 (
-    data, forecast, mintemp, maxtemp,
+    data, forecast, mintemp, maxtemp, totalpre,
    
     filter = () => true) => 
     {
@@ -18,16 +18,19 @@ const dataModel =
     const maxtempData = () => maxtemp.map(w => ({...w})).filter(filter)
     const updateMaxtempData = p => model(maxtemp.map(pp => p.id == pp.id? p : pp), filter)
 
-    const filtered = filter => model(datas, forecast, mintemp, maxtemp
+    const totalpreData = () => totalpre.map(w => ({...w})).filter(filter)
+    const updateTotalPreData = p => model(totalpre.map(pp => p.id == pp.id? p : pp), filter)
+
+    const filtered = filter => model(datas, forecast, mintemp, maxtemp, totalpre
       
         , filter )
 
-    const all = () => model(data, forecast, mintemp, maxtemp
+    const all = () => model(data, forecast, mintemp, maxtemp, totalpre
        
         )
 
     return { weatherData,updateData, forecastData,updateForecastData,mintempData ,updateMintempData,maxtempData,updateMaxtempData ,
-        filtered, all }
+        totalpreData, updateTotalPreData ,filtered, all }
 }
 
 export default dataModel
