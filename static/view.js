@@ -6,6 +6,7 @@ export default window => {
     const table_body3 = document.getElementById('max_temp')
     const table_body4 = document.getElementById('total_pre')
     const table_body5 = document.getElementById('avg_wind')
+   
 
     const listeners = []
 
@@ -70,13 +71,35 @@ export default window => {
         
         
     }
-    const addAverageWindData = p => {
+    const addAverageWindHorData = p => {
         const  trw  = table_body5.appendChild(document.createElement('tr'))
         trw.insertCell().appendChild(document.createTextNode(p.value))
         trw.insertCell().appendChild(document.createTextNode(p.type))
         trw.insertCell().appendChild(document.createTextNode(p.unit))
         trw.insertCell().appendChild(document.createTextNode(p.time))
         trw.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+
+    const addAverageWindAarData = p => {
+        const  trA  = table_body5.appendChild(document.createElement('tr'))
+        trA.insertCell().appendChild(document.createTextNode(p.value))
+        trA.insertCell().appendChild(document.createTextNode(p.type))
+        trA.insertCell().appendChild(document.createTextNode(p.unit))
+        trA.insertCell().appendChild(document.createTextNode(p.time))
+        trA.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+
+    const addAverageWindCopData = p => {
+        const  trC  = table_body5.appendChild(document.createElement('tr'))
+        trC.insertCell().appendChild(document.createTextNode(p.value))
+        trC.insertCell().appendChild(document.createTextNode(p.type))
+        trC.insertCell().appendChild(document.createTextNode(p.unit))
+        trC.insertCell().appendChild(document.createTextNode(p.time))
+        trC.insertCell().appendChild(document.createTextNode(p.place))
         
         
     }
@@ -89,7 +112,9 @@ export default window => {
         model.mintempData().forEach(addMinTempData)
         model.maxtempData().forEach(addMaxTempData)
         model.totalpreData().forEach(addTotalPreData)
-        model.avgWindData().forEach(addAverageWindData)
+        model.avgWindHorData().forEach(addAverageWindHorData)
+        model.avgWindAarData().forEach(addAverageWindAarData)
+        model.avgWindCopData().forEach(addAverageWindCopData)
     }
     
  
