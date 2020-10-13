@@ -1,6 +1,6 @@
 const dataModel = 
 (
-    data, forecast, mintemp, maxtemp, totalpre, avgwindHor, avgwindAar,avgwindCop, avgcloud, domwind,
+    data, forecast, mintemphor, maxtemphor, mintempaar, maxtempaar, mintempcph, maxtempcph, totalpre, avgwindHor, avgwindAar,avgwindCop, avgcloud, domwind,
    
     filter = () => true) => 
     {
@@ -12,11 +12,23 @@ const dataModel =
     const forecastData = () => forecast.map(w => ({...w})).filter(filter)
     const updateForecastData = p => model(forecast.map(pp => p.id == pp.id? p : pp), filter)
 
-    const mintempData = () => mintemp.map(w => ({...w})).filter(filter)
-    const updateMintempData = p => model(mintemp.map(pp => p.id == pp.id? p : pp), filter)
+    const mintempHorData = () => mintemphor.map(w => ({...w})).filter(filter)
+    const updateMintempHorData = p => model(mintemphor.map(pp => p.id == pp.id? p : pp), filter)
 
-    const maxtempData = () => maxtemp.map(w => ({...w})).filter(filter)
-    const updateMaxtempData = p => model(maxtemp.map(pp => p.id == pp.id? p : pp), filter)
+    const maxtempHorData = () => maxtemphor.map(w => ({...w})).filter(filter)
+    const updateMaxtempHorData = p => model(maxtemphor.map(pp => p.id == pp.id? p : pp), filter)
+
+    const mintempAarData = () => mintempaar.map(w => ({...w})).filter(filter)
+    const updateMintempAarData = p => model(mintempaar.map(pp => p.id == pp.id? p : pp), filter)
+
+    const maxtempAarData = () => maxtempaar.map(w => ({...w})).filter(filter)
+    const updateMaxtempAarData = p => model(maxtempaar.map(pp => p.id == pp.id? p : pp), filter)
+
+    const mintempCphData = () => mintempcph.map(w => ({...w})).filter(filter)
+    const updateMintempCphData = p => model(mintempcph.map(pp => p.id == pp.id? p : pp), filter)
+
+    const maxtempCphData = () => maxtempcph.map(w => ({...w})).filter(filter)
+    const updateMaxtempCphData = p => model(maxtempcph.map(pp => p.id == pp.id? p : pp), filter)
 
     const totalpreData = () => totalpre.map(w => ({...w})).filter(filter)
     const updateTotalPreData = p => model(totalpre.map(pp => p.id == pp.id? p : pp), filter)
@@ -44,9 +56,11 @@ const dataModel =
        
         )
 
-    return { weatherData,updateData, forecastData,updateForecastData,mintempData ,updateMintempData,maxtempData,updateMaxtempData ,
-        totalpreData, updateTotalPreData, avgWindHorData, updateAvgWindHorData,
-        avgWindAarData, updateAvgWindAarData,avgWindCopData, updateAvgWindCopData, domWindData, updateDomWindData, avgCloudData,updateAvgCloudData,filtered, all }
+    return { weatherData,updateData, forecastData,updateForecastData,mintempHorData ,updateMintempHorData,maxtempHorData,
+        updateMaxtempHorData,mintempAarData, updateMintempAarData,maxtempAarData,updateMaxtempAarData, mintempCphData, 
+        updateMintempCphData,maxtempCphData,updateMaxtempCphData, totalpreData, updateTotalPreData, 
+        avgWindHorData, updateAvgWindHorData, avgWindAarData, updateAvgWindAarData,avgWindCopData, updateAvgWindCopData, domWindData,
+        updateDomWindData, avgCloudData,updateAvgCloudData,filtered, all }
 }
 
 export default dataModel

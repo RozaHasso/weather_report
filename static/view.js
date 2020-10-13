@@ -39,26 +39,69 @@ export default window => {
     }
 
 
-    const addMinTempData = p => {
-        const  trm  = table_body2.appendChild(document.createElement('tr'))
-        trm.insertCell().appendChild(document.createTextNode(p.value))
-        trm.insertCell().appendChild(document.createTextNode(p.type))
-        trm.insertCell().appendChild(document.createTextNode(p.unit))
-        trm.insertCell().appendChild(document.createTextNode(p.time))
-        trm.insertCell().appendChild(document.createTextNode(p.place))
+    const addMinTempHorData = p => {
+        const  trmih  = table_body2.appendChild(document.createElement('tr'))
+        trmih.insertCell().appendChild(document.createTextNode(p.value))
+        trmih.insertCell().appendChild(document.createTextNode(p.type))
+        trmih.insertCell().appendChild(document.createTextNode(p.unit))
+        trmih.insertCell().appendChild(document.createTextNode(p.time))
+        trmih.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+    const addMinTempAarData = p => {
+        const  trmia  = table_body2.appendChild(document.createElement('tr'))
+        trmia.insertCell().appendChild(document.createTextNode(p.value))
+        trmia.insertCell().appendChild(document.createTextNode(p.type))
+        trmia.insertCell().appendChild(document.createTextNode(p.unit))
+        trmia.insertCell().appendChild(document.createTextNode(p.time))
+        trmia.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+    const addMinTempCphData = p => {
+        const  trmic  = table_body2.appendChild(document.createElement('tr'))
+        trmic.insertCell().appendChild(document.createTextNode(p.value))
+        trmic.insertCell().appendChild(document.createTextNode(p.type))
+        trmic.insertCell().appendChild(document.createTextNode(p.unit))
+        trmic.insertCell().appendChild(document.createTextNode(p.time))
+        trmic.insertCell().appendChild(document.createTextNode(p.place))
         
         
     }
 
 
 
-    const addMaxTempData = p => {
-        const  trma  = table_body3.appendChild(document.createElement('tr'))
-        trma.insertCell().appendChild(document.createTextNode(p.value))
-        trma.insertCell().appendChild(document.createTextNode(p.type))
-        trma.insertCell().appendChild(document.createTextNode(p.unit))
-        trma.insertCell().appendChild(document.createTextNode(p.time))
-        trma.insertCell().appendChild(document.createTextNode(p.place))
+    const addMaxTempHorData = p => {
+        const  trmxh  = table_body3.appendChild(document.createElement('tr'))
+        trmxh.insertCell().appendChild(document.createTextNode(p.value))
+        trmxh.insertCell().appendChild(document.createTextNode(p.type))
+        trmxh.insertCell().appendChild(document.createTextNode(p.unit))
+        trmxh.insertCell().appendChild(document.createTextNode(p.time))
+        trmxh.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+    
+
+    const addMaxTempAarData = p => {
+        const  trmxa  = table_body3.appendChild(document.createElement('tr'))
+        trmxa.insertCell().appendChild(document.createTextNode(p.value))
+        trmxa.insertCell().appendChild(document.createTextNode(p.type))
+        trmxa.insertCell().appendChild(document.createTextNode(p.unit))
+        trmxa.insertCell().appendChild(document.createTextNode(p.time))
+        trmxa.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
+
+    const addMaxTempCphData = p => {
+        const  trmxc  = table_body3.appendChild(document.createElement('tr'))
+        trmxc.insertCell().appendChild(document.createTextNode(p.value))
+        trmxc.insertCell().appendChild(document.createTextNode(p.type))
+        trmxc.insertCell().appendChild(document.createTextNode(p.unit))
+        trmxc.insertCell().appendChild(document.createTextNode(p.time))
+        trmxc.insertCell().appendChild(document.createTextNode(p.place))
         
         
     }
@@ -136,8 +179,12 @@ export default window => {
       
         model.weatherData().forEach(addData)
         model.forecastData().forEach(addForecastData)
-        model.mintempData().forEach(addMinTempData)
-        model.maxtempData().forEach(addMaxTempData)
+        model.mintempHorData().forEach(addMinTempHorData)
+        model.mintempAarData().forEach(addMinTempAarData)
+        model.mintempCphData().forEach(addMinTempCphData)
+        model.maxtempHorData().forEach(addMaxTempHorData)
+        model.maxtempAarData().forEach(addMaxTempAarData)
+        model.maxtempCphData().forEach(addMaxTempCphData)
         model.totalpreData().forEach(addTotalPreData)
         model.avgWindHorData().forEach(addAverageWindHorData)
         model.avgWindAarData().forEach(addAverageWindAarData)
