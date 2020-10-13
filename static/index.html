@@ -68,7 +68,6 @@
                             const fiveDays = ts - (6 * 24 * 60 * 60 * 1000);
                             return new Date(fiveDays)
                         }
-                        
                         const last5daysObject = last5Data.filter(e => { var d = new Date(e.time); return d.getDate() > for5Days().getDate() })
                         const temp = last5daysObject.filter(t => t.type === 'temperature')
 
@@ -89,7 +88,7 @@
 
                         //4) forth query, •   Total precipitation for the last 5 days
                        
-                         const pre = for5Days.filter(t => t.type === 'precipitation')
+                         const pre = last5daysObject.filter(t => t.type === 'precipitation')
                         const finalfortotalpre = pre.reduce((op, { value, type, unit, time, place }) => {
                             const [date] = time.split('T', 1)
                             op[date] = op[date] || { value, type, unit, time, place }
