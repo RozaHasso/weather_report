@@ -1,6 +1,6 @@
 const dataModel = 
 (
-    data, forecast, mintemp, maxtemp, totalpre, avgwindHor, avgwindAar,avgwindCop, avgcloud,
+    data, forecast, mintemp, maxtemp, totalpre, avgwindHor, avgwindAar,avgwindCop, avgcloud, domwind,
    
     filter = () => true) => 
     {
@@ -29,6 +29,8 @@ const dataModel =
 
     const avgWindCopData = () => avgwindCop.map(w => ({...w})).filter(filter)
     const updateAvgWindCopData = p => model(avgwindCop.map(pp => p.id == pp.id? p : pp), filter)
+    const domWindData = () => domwind.map(w => ({...w})).filter(filter)
+    const updateDomWindData = p => model(domwind.map(pp => p.id == pp.id? p : pp), filter)
 
 
     const avgCloudData = () => avgcloud.map(w => ({...w})).filter(filter)
@@ -44,7 +46,7 @@ const dataModel =
 
     return { weatherData,updateData, forecastData,updateForecastData,mintempData ,updateMintempData,maxtempData,updateMaxtempData ,
         totalpreData, updateTotalPreData, avgWindHorData, updateAvgWindHorData,
-        avgWindAarData, updateAvgWindAarData,avgWindCopData, updateAvgWindCopData,avgCloudData,updateAvgCloudData,filtered, all }
+        avgWindAarData, updateAvgWindAarData,avgWindCopData, updateAvgWindCopData, domWindData, updateDomWindData, avgCloudData,updateAvgCloudData,filtered, all }
 }
 
 export default dataModel

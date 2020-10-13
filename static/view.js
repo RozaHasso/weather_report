@@ -6,6 +6,7 @@ export default window => {
     const table_body3 = document.getElementById('max_temp')
     const table_body4 = document.getElementById('total_pre')
     const table_body5 = document.getElementById('avg_wind')
+    const table_body6 = document.getElementById('dom_wind')
     const table_body7 = document.getElementById('avg_cloud')
    
 
@@ -105,6 +106,16 @@ export default window => {
         
     }
 
+    const addDominantWindData = p => {
+        const trd = table_body6.appendChild(document.createElement('tr'))
+        trd.insertCell().appendChild(document.createTextNode(p.value))
+        trd.insertCell().appendChild(document.createTextNode(p.direction))
+        trd.insertCell().appendChild(document.createTextNode(p.type))
+        trd.insertCell().appendChild(document.createTextNode(p.unit))
+        trd.insertCell().appendChild(document.createTextNode(p.time))
+        trd.insertCell().appendChild(document.createTextNode(p.place))
+    }
+
     const addAverageCloudData = p => {
         const  trAc = table_body7.appendChild(document.createElement('tr'))
         trAc.insertCell().appendChild(document.createTextNode(p.value))
@@ -127,6 +138,7 @@ export default window => {
         model.avgWindHorData().forEach(addAverageWindHorData)
         model.avgWindAarData().forEach(addAverageWindAarData)
         model.avgWindCopData().forEach(addAverageWindCopData)
+        model.domWindData().forEach(addDominantWindData)
         model.avgCloudData().forEach(addAverageCloudData)
     }
     
