@@ -65,7 +65,7 @@
                         const for5Days = () => {
                             const date = new Date();
                             const ts = date.getTime();
-                            const fiveDays = ts - (6 * 24 * 60 * 60 * 1000);
+                            const fiveDays = ts - (5 * 24 * 60 * 60 * 1000);
                             return new Date(fiveDays)
                         }
                         const last5daysObject = last5Data.filter(e => { var d = new Date(e.time); return d.getDate() > for5Days().getDate() })
@@ -88,19 +88,34 @@
 
                         //4) forth query, •   Total precipitation for the last 5 days
                        
-                         const pre = last5daysObject.filter(t => t.type === 'precipitation')
-                        const finalfortotalpre = pre.reduce((op, { value, type, unit, time, place }) => {
-                            const [date] = time.split('T', 1)
-                            op[date] = op[date] || { value, type, unit, time, place }
-                           
-                            return op
-                        }, {}) 
-                        
+                         const pre = last5daysObject.filter(t => t.type === 'precipitation') 
+                        var tmppre ={};
+                        pre.forEach(function(item){
+                        // if property for current date already exists  we update existing otherwise start new one
+                        var obj =  tmppre[item.time.split('T', 1)] = tmppre[item.time.split('T', 1)] || {total: 0, type: item.type, unit:item.unit, time:item.time, place: item.place}
+                        obj.total += item.value
+                        });
 
+                        const finalfortotalpre = Object.entries(tmppre).map(function(entry){
+                        return { value: entry[1].total, type: entry[1].type, unit:entry[1].unit, time:entry[1].time, place:entry[1].place}
+                        })
 
+                        //5) fifth query, •   Average wind speed for the last 5 days
+                        const wind = last5daysObject.filter(t => t.type === 'wind speed')
+                        var tmpwind ={};
+                        wind.forEach(function(item){
+                        // if property for current date already exists  we update existing otherwise start new one
+                        var obj =  tmpwind[item.time.split('T', 1)] = tmpwind[item.time.split('T', 1)] || {count: 0, total: 0, type: item.type, unit:item.unit, time:item.time, place: item.place}
+                        obj.count++
+                        obj.total += item.value
+                        });
 
+                        const finalfifthavgwind = Object.entries(tmpwind).map(function(entry){
+                        return { value: entry[1].total/entry[1].count, type: entry[1].type, unit:entry[1].unit, time:entry[1].time, place:entry[1].place}
+                        })
+                        console.log(finalfifthavgwind)
                         const theModel = dataModel(latestData1, latestData2, Object.values(finalformintemp), Object.values(finalformaxtemp),
-                            Object.values(finalfortotalpre))
+                        Object.values(finalfortotalpre), Object.values(finalfifthavgwind))
                         const theView = view(window)
                         theView.update(theModel)
                     }
@@ -109,21 +124,13 @@
             }
 
         }
-
-
-
     </script>
 </head>
-
-
-
-
-
 <body onload="init()">
     <div id='base'>
         <h1>Weather Wep Page </h1>
         <h2>First Query</h2>
-        <table id='weather' style="display: inline-block;" ,>
+        <table id='weather' style="float: left; margin:1%" ,>
             <thead>
                 <tr>
                     <td>value</td>
@@ -137,7 +144,7 @@
         </table>
 
 
-        <table id='forecast' style="float: right;">
+        <table id='forecast' style="display: inline-block; margin: 1%">
             <thead>
                 <tr>
                     <td>from</td>
@@ -156,7 +163,7 @@
             <thead>
                 <tr>
 
-                    <td>value</td>
+                    <td>Min value</td>
                     <td>type</td>
                     <td>unit</td>
                     <td>time</td>
@@ -172,7 +179,7 @@
             <thead>
                 <tr>
 
-                    <td>value</td>
+                    <td>Max value</td>
                     <td>type</td>
                     <td>unit</td>
                     <td>time</td>
@@ -188,7 +195,7 @@
             <thead>
                 <tr>
 
-                    <td>value</td>
+                    <td>Total value</td>
                     <td>type</td>
                     <td>unit</td>
                     <td>time</td>
@@ -196,6 +203,20 @@
                 </tr>
             </thead>
             <tbody id='total_pre'></tbody>
+        </table>
+        <h2>Fifth Query</h2>
+        <table id='avrwind' style="margin-top: 25px">
+            <thead>
+                <tr>
+
+                    <td>Average value</td>
+                    <td>type</td>
+                    <td>unit</td>
+                    <td>time</td>
+                    <td>place</td>
+                </tr>
+            </thead>
+            <tbody id='avg_wind'></tbody>
         </table>
     </div>
 

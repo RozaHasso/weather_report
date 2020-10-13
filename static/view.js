@@ -5,6 +5,7 @@ export default window => {
     const table_body2 = document.getElementById('min_temp')
     const table_body3 = document.getElementById('max_temp')
     const table_body4 = document.getElementById('total_pre')
+    const table_body5 = document.getElementById('avg_wind')
 
     const listeners = []
 
@@ -69,6 +70,16 @@ export default window => {
         
         
     }
+    const addAverageWindData = p => {
+        const  trw  = table_body5.appendChild(document.createElement('tr'))
+        trw.insertCell().appendChild(document.createTextNode(p.value))
+        trw.insertCell().appendChild(document.createTextNode(p.type))
+        trw.insertCell().appendChild(document.createTextNode(p.unit))
+        trw.insertCell().appendChild(document.createTextNode(p.time))
+        trw.insertCell().appendChild(document.createTextNode(p.place))
+        
+        
+    }
 
    
     const update = model => {
@@ -78,6 +89,7 @@ export default window => {
         model.mintempData().forEach(addMinTempData)
         model.maxtempData().forEach(addMaxTempData)
         model.totalpreData().forEach(addTotalPreData)
+        model.avgWindData().forEach(addAverageWindData)
     }
     
  
