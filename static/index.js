@@ -21,9 +21,13 @@ window.init = function () {
             const fiveDays = ts - (1000 * 60 * 60 * 24 * 5);
             return new Date(fiveDays)
         }
+        //  consider using this instead of the above 
+        //var date = new Date();
+        // const before5days = date.setDate(date.getDate() - 5);
+
         const last5daysObject = last5Data.filter(e => { const d = new Date(e.time); return d.getDate() > for5Days().getDate() })
 
-        
+
 
         //4) forth query, •   Total precipitation for the last 5 days
         const precipitation = last5daysObject.filter(t => t.type === 'precipitation')
@@ -77,7 +81,7 @@ window.init = function () {
             const forNextDay = () => {
                 const date = new Date();
                 const ts = date.getTime();
-                const oneDay = ts - (1000 * 60 * 60 *24);
+                const oneDay = ts - (1000 * 60 * 60 * 24);
                 return new Date(oneDay)
             }
             const NextDayObject = forecast.filter(e => { const d = new Date(e.time); return d.getDate() > forNextDay().getDate() })
@@ -208,7 +212,7 @@ window.init = function () {
                             Object.values(finalformaxtempHor), Object.values(finalformintempAar), Object.values(finalformaxtempAar),
                             Object.values(finalformintempCph), Object.values(finalformaxtempCph), Object.values(finalfortotalpre),
                             Object.values(finalfifthavgwindHor), Object.values(finalfifthavgwindAar), Object.values(finalfifthavgwindCph),
-                            Object.values(finalavgcloud), Object.values(finalforwinddirection),NextDayObject)
+                            Object.values(finalavgcloud), Object.values(finalforwinddirection), NextDayObject)
 
 
                         const theView = view(window)
