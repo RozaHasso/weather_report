@@ -21,16 +21,10 @@ window.init = function () {
         const for5Days = () => {
             const date = new Date();
             const ts = date.getTime();
-            const fiveDays = ts - (1000 * 60 * 60 * 24 * 5);
+            const fiveDays = ts - (5 * 24 * 60 * 60 * 1000);
             return new Date(fiveDays)
         }
         const last5daysObject = last5Data.filter(e => { const d = new Date(e.time); return d.getDate() > for5Days().getDate() })
-<<<<<<< HEAD
-=======
-
-        
-
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
         //4) forth query, •   Total precipitation for the last 5 days
         const precipitation = last5daysObject.filter(t => t.type === 'precipitation')
         const tmppre = {};
@@ -75,65 +69,21 @@ window.init = function () {
             const latestData2 = forecast.filter(e => { const d = new Date(e.time); return d.getTime() == latestDate2.getTime() })
 
 
-<<<<<<< HEAD
             request.open('GET', 'http://localhost:8080/data')
-=======
-
-            //8) eighth query,•	 Hourly predictions for the next 24 hours
-            const forNextDay = () => {
-                const date = new Date();
-                const ts = date.getTime();
-                const oneDay = ts - (1000 * 60 * 60 *24);
-                return new Date(oneDay)
-            }
-            const NextDayObject = forecast.filter(e => { const d = new Date(e.time); return d.getDate() > forNextDay().getDate() })
-
-
-
-
-            request.open('GET', 'http://localhost:8080/data/Horsens')
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
             request.send()
             request.onload = () => {
                 const last5DataAveHor = request.response
                 const last5daysObjectAveHor = last5DataAveHor.filter(e => { const d = new Date(e.time); return d.getDate() > for5Days().getDate() })
-<<<<<<< HEAD
                 //2) second query, •  Minimum temperature for the last 5 days Horsens
                 const finalformintempHor = last5daysObjectAveHor.reduce((tm, { value, type, unit, time, place }) => {
-=======
-                const wind = last5daysObjectAveHor.filter(t => t.type === 'wind speed')
-                const tmpwind = {};
-                wind.forEach(function (item) {
-                    // if property for current date already exists  we update existing otherwise start new one
-                    const obj = tmpwind[item.time.split('T', 1)] = tmpwind[item.time.split('T', 1)] || { count: 0, total: 0, type: item.type, direction: item.direction, unit: item.unit, time: item.time, place: item.place }
-                    obj.count++
-                    obj.total += item.value
-                });
-
-                const finalfifthavgwindHor = Object.entries(tmpwind).map(function (entry) {
-                    return { value: entry[1].total / entry[1].count, type: entry[1].type, direction: entry[1].direction, unit: entry[1].unit, time: entry[0], place: entry[1].place }
-                })
-
-                //2) second query, conyinue,•  Minimum temperature for the last 5 days for Horsens
-                const temp = last5daysObjectAveHor.filter(t => t.type === 'temperature')
-                const finalformintempHor = temp.reduce((tm, { value, type, unit, time, place }) => {
-                    const [date] = time.split('T', 1)
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
                     time = time.split('T', 1)
                     const [date] = time
                     tm[date] = tm[date] || { value: Infinity, type, unit, time, place }
                     tm[date].value = tm[date].value > value ? value : tm[date].value
                     return tm
                 }, {})
-<<<<<<< HEAD
                 //3) third query, •   Maximum temperature for the last 5 days horsens
                 const finalformaxtempHor = last5daysObjectAveHor.reduce((tmm, { value, type, unit, time, place }) => {
-=======
-
-                //3) third query, conyinue,•  Minimum temperature for the last 5 days for Horsens
-                const finalformaxtempHor = temp.reduce((tmm, { value, type, unit, time, place }) => {
-                    const [date] = time.split('T', 1)
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
                     time = time.split('T', 1)
                     const [date] = time
                     tmm[date] = tmm[date] || { value: -Infinity, type, unit, time, place }
@@ -160,43 +110,16 @@ window.init = function () {
                 request.onload = () => {
                     const last5DataAveAar = request.response
                     const last5daysObjectAveAar = last5DataAveAar.filter(e => { const d = new Date(e.time); return d.getDate() > for5Days().getDate() })
-<<<<<<< HEAD
                     //2) second query, •  Minimum temperature for the last 5 days Aarhus
                     const finalformintempAar = last5daysObjectAveAar.reduce((tm, { value, type, unit, time, place }) => {
-=======
-                    const wind = last5daysObjectAveAar.filter(t => t.type === 'wind speed')
-                    const tmpwind = {};
-                    wind.forEach(function (item) {
-                        // if property for current date already exists  we update existing otherwise start new one
-                        const obj = tmpwind[item.time.split('T', 1)] = tmpwind[item.time.split('T', 1)] || { count: 0, total: 0, type: item.type, direction: item.direction, unit: item.unit, time: item.time, place: item.place }
-                        obj.count++
-                        obj.total += item.value
-                    });
-
-                    const finalfifthavgwindAar = Object.entries(tmpwind).map(function (entry) {
-                        return { value: entry[1].total / entry[1].count, type: entry[1].type, direction: entry[1].direction, unit: entry[1].unit, time: entry[0], place: entry[1].place }
-                    })
-
-                    //2) second query, conyinue,•  Minimum temperature for the last 5 days for Aarhus
-                    const temp = last5daysObjectAveAar.filter(t => t.type === 'temperature')
-                    const finalformintempAar = temp.reduce((tm, { value, type, unit, time, place }) => {
-                        const [date] = time.split('T', 1)
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
                         time = time.split('T', 1)
                         const [date] = time
                         tm[date] = tm[date] || { value: Infinity, type, unit, time, place }
                         tm[date].value = tm[date].value > value ? value : tm[date].value
                         return tm
                     }, {})
-<<<<<<< HEAD
                     //3) third query, •   Maximum temperature for the last 5 days Aarhus
                     const finalformaxtempAar = last5daysObjectAveAar.reduce((tmm, { value, type, unit, time, place }) => {
-=======
-
-                    //3) third query, conyinue,•  Minimum temperature for the last 5 days for Aarhus
-                    const finalformaxtempAar = temp.reduce((tmm, { value, type, unit, time, place }) => {
-                        const [date] = time.split('T', 1)
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
                         time = time.split('T', 1)
                         const [date] = time
                         tmm[date] = tmm[date] || { value: -Infinity, type, unit, time, place }
@@ -223,43 +146,16 @@ window.init = function () {
                     request.onload = () => {
                         const last5DataAveCph = request.response
                         const last5daysObjectAveCph = last5DataAveCph.filter(e => { const d = new Date(e.time); return d.getDate() > for5Days().getDate() })
-<<<<<<< HEAD
                         //2) second query, •  Minimum temperature for the last 5 days Copenhagen
                         const finalformintempCph = last5daysObjectAveCph.reduce((tm, { value, type, unit, time, place }) => {
-=======
-                        const wind = last5daysObjectAveCph.filter(t => t.type === 'wind speed')
-                        const tmpwind = {};
-                        wind.forEach(function (item) {
-                            // if property for current date already exists  we update existing otherwise start new one
-                            const obj = tmpwind[item.time.split('T', 1)] = tmpwind[item.time.split('T', 1)] || { count: 0, total: 0, type: item.type, direction: item.direction, unit: item.unit, time: item.time, place: item.place }
-                            obj.count++
-                            obj.total += item.value
-                        });
-
-                        const finalfifthavgwindCph = Object.entries(tmpwind).map(function (entry) {
-                            return { value: entry[1].total / entry[1].count, type: entry[1].type, direction: entry[1].direction, unit: entry[1].unit, time: entry[0], place: entry[1].place }
-                        })
-
-                        //2) second query, conyinue,•  Minimum temperature for the last 5 days for Copenhagen
-                        const temp = last5daysObjectAveCph.filter(t => t.type === 'temperature')
-                        const finalformintempCph = temp.reduce((tm, { value, type, unit, time, place }) => {
-                            const [date] = time.split('T', 1)
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
                             time = time.split('T', 1)
                             const [date] = time
                             tm[date] = tm[date] || { value: Infinity, type, unit, time, place }
                             tm[date].value = tm[date].value > value ? value : tm[date].value
                             return tm
                         }, {})
-<<<<<<< HEAD
                         //3) third query, •   Maximum temperature for the last 5 days Copenhagen
                         const finalformaxtempCph = last5daysObjectAveCph.reduce((tmm, { value, type, unit, time, place }) => {
-=======
-
-                        //3) third query, conyinue,•  Minimum temperature for the last 5 days for Copenhagen
-                        const finalformaxtempCph = temp.reduce((tmm, { value, type, unit, time, place }) => {
-                            const [date] = time.split('T', 1)
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
                             time = time.split('T', 1)
                             const [date] = time
                             tmm[date] = tmm[date] || { value: -Infinity, type, unit, time, place }
@@ -280,21 +176,11 @@ window.init = function () {
                             return { value: entry[1].total / entry[1].count, type: entry[1].type, direction: entry[1].direction, unit: entry[1].unit, time: entry[0], place: entry[1].place }
                         })
 
-<<<<<<< HEAD
                         const theModel = dataModel(tempweather, latestData2, Object.values(finalformintempHor),
                             Object.values(finalformaxtempHor), Object.values(finalformintempAar), Object.values(finalformaxtempAar),
                             Object.values(finalformintempCph), Object.values(finalformaxtempCph), Object.values(finalfortotalpre),
                             Object.values(finalfifthavgwindHor), Object.values(finalfifthavgwindAar), Object.values(finalfifthavgwindCph),
                             Object.values(finalavgcloud), Object.values(finalforwinddirection))
-=======
-
-
-                        const theModel = dataModel(latestData1, latestData2, Object.values(finalformintempHor),
-                            Object.values(finalformaxtempHor), Object.values(finalformintempAar), Object.values(finalformaxtempAar),
-                            Object.values(finalformintempCph), Object.values(finalformaxtempCph), Object.values(finalfortotalpre),
-                            Object.values(finalfifthavgwindHor), Object.values(finalfifthavgwindAar), Object.values(finalfifthavgwindCph),
-                            Object.values(finalavgcloud), Object.values(finalforwinddirection),NextDayObject)
->>>>>>> e70f6311339ee1b44a53655d9dd4f34e2243c41e
 
 
                         const theView = view(window)

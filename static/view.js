@@ -8,7 +8,6 @@ export default window => {
     const table_body5 = document.getElementById('avg_wind')
     const table_body6 = document.getElementById('dom_wind')
     const table_body7 = document.getElementById('avg_cloud')
-    const table_body8 = document.getElementById('hourly_pre')
    
 
     const listeners = []
@@ -175,18 +174,6 @@ export default window => {
         
     }
 
-    const addHourlyPredictionData = p => {
-        const  trHp = table_body8.appendChild(document.createElement('tr'))
-        trHp.insertCell().appendChild(document.createTextNode(p.from))
-        trHp.insertCell().appendChild(document.createTextNode(p.to))
-        trHp.insertCell().appendChild(document.createTextNode(p.type))
-        trHp.insertCell().appendChild(document.createTextNode(p.unit))
-        trHp.insertCell().appendChild(document.createTextNode(p.time))
-        trHp.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
-    }
-
    
     const update = model => {
       
@@ -204,7 +191,6 @@ export default window => {
         model.avgWindCopData().forEach(addAverageWindCopData)
         model.domWindData().forEach(addDominantWindData)
         model.avgCloudData().forEach(addAverageCloudData)
-        model.hourlyPreData().forEach(addHourlyPredictionData)
     }
     
  
