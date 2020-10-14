@@ -1,6 +1,7 @@
 const dataModel = 
 (
-    data, forecast, mintemphor, maxtemphor, mintempaar, maxtempaar, mintempcph, maxtempcph, totalpre, avgwindHor, avgwindAar,avgwindCop, avgcloud, domwind,
+    data, forecast, mintemphor, maxtemphor, mintempaar, maxtempaar, mintempcph, maxtempcph, totalpre, avgwindHor
+    , avgwindAar,avgwindCop,  domwind, avgcloud, hourlypre,
    
     filter = () => true) => 
     {
@@ -39,6 +40,7 @@ const dataModel =
 
     const avgWindCopData = () => avgwindCop.map(w => ({...w})).filter(filter)
     const updateAvgWindCopData = p => model(avgwindCop.map(pp => p.id == pp.id? p : pp), filter)
+
     const domWindData = () => domwind.map(w => ({...w})).filter(filter)
     const updateDomWindData = p => model(domwind.map(pp => p.id == pp.id? p : pp), filter)
 
@@ -46,11 +48,19 @@ const dataModel =
     const avgCloudData = () => avgcloud.map(w => ({...w})).filter(filter)
     const updateAvgCloudData = p => model(avgcloud.map(pp => p.id == pp.id? p : pp), filter)
 
-    const filtered = filter => model(datas, forecast, mintemp, maxtemp, totalpre, avgwindHor, avgwindCop,  avgcloud
+
+    const hourlyPreData = () => hourlypre.map(w => ({...w})).filter(filter)
+    const updateHourlyPreData = p => model(hourlypre.map(pp => p.id == pp.id? p : pp), filter)
+
+    
+
+    const filtered = filter => model(datas, forecast, mintemp, maxtemp, totalpre, avgwindHor,
+         avgwindCop, domwind, avgcloud, hourlypre
       
         , filter )
 
-    const all = () => model(data, forecast, mintemp, maxtemp, totalpre, avgwindHor, AvgwindAar, avgwindCop, avgcloud
+    const all = () => model(data, forecast, mintemp, maxtemp, totalpre, avgwindHor, AvgwindAar,
+         avgwindCop,domwind, avgcloud, hourlypre
        
         )
 
@@ -58,7 +68,7 @@ const dataModel =
         updateMaxtempHorData,mintempAarData, updateMintempAarData,maxtempAarData,updateMaxtempAarData, mintempCphData, 
         updateMintempCphData,maxtempCphData,updateMaxtempCphData, totalpreData, updateTotalPreData, 
         avgWindHorData, updateAvgWindHorData, avgWindAarData, updateAvgWindAarData,avgWindCopData, updateAvgWindCopData, domWindData,
-        updateDomWindData, avgCloudData,updateAvgCloudData,filtered, all }
+        updateDomWindData, avgCloudData,updateAvgCloudData,hourlyPreData,updateHourlyPreData, filtered, all }
 }
 
 export default dataModel
