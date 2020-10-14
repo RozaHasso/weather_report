@@ -4,8 +4,6 @@ const dataModel =
    
     filter = () => true) => 
     {
-    
-    
     const weatherData = () => data.map(w => ({...w})).filter(filter)
     const updateData = p => model(data.map(pp => p.id == pp.id? p : pp), filter)
 
