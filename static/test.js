@@ -1,0 +1,1 @@
+const prediction_keys = ['time', 'place', 'type', 'unit', 'from', 'to']
