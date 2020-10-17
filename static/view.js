@@ -1,7 +1,7 @@
 export default window => {
     const document = window.document
-    const table_body = document.getElementById('weather_data')
-    const table_body1 = document.getElementById('forecast_data')
+    const wheatherDataTable = document.getElementById('weather_data')
+    const forecast_dataTable = document.getElementById('forecast_data')
     const table_body2 = document.getElementById('min_temp')
     const table_body3 = document.getElementById('max_temp')
     const table_body4 = document.getElementById('total_pre')
@@ -9,71 +9,50 @@ export default window => {
     const table_body6 = document.getElementById('dom_wind')
     const table_body7 = document.getElementById('avg_cloud')
     const table_body8 = document.getElementById('hourly_pre')
-   
 
-    const listeners = []
 
-    const listen = l => listeners.push(l)
 
-    const addData = p => {
-        const tr = table_body.appendChild(document.createElement('tr'))
+  
+
+    const addWheatherData = p => {
+        const tr = wheatherDataTable.appendChild(document.createElement('tr'))
         tr.insertCell().appendChild(document.createTextNode(p.value))
         tr.insertCell().appendChild(document.createTextNode(p.type))
+        tr.insertCell().appendChild(document.createTextNode(p.precipitation_type))
+        tr.insertCell().appendChild(document.createTextNode(p.direction))
         tr.insertCell().appendChild(document.createTextNode(p.unit))
         tr.insertCell().appendChild(document.createTextNode(p.time))
         tr.insertCell().appendChild(document.createTextNode(p.place))
-
+      
         
         
     }
 
     const addForecastData = p => {
-        const  trf  = table_body1.appendChild(document.createElement('tr'))
-        trf.insertCell().appendChild(document.createTextNode(p.from))
-        trf.insertCell().appendChild(document.createTextNode(p.to))
-        trf.insertCell().appendChild(document.createTextNode(p.type))
-        trf.insertCell().appendChild(document.createTextNode(p.unit))
-        trf.insertCell().appendChild(document.createTextNode(p.time))
-        trf.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
+        const tr = forecast_dataTable.appendChild(document.createElement('tr'))
+        tr.insertCell().appendChild(document.createTextNode(p.from))
+        tr.insertCell().appendChild(document.createTextNode(p.to))
+        tr.insertCell().appendChild(document.createTextNode(p.type))
+        tr.insertCell().appendChild(document.createTextNode(p.precipitation_types))
+        tr.insertCell().appendChild(document.createTextNode(p.directions))
+        tr.insertCell().appendChild(document.createTextNode(p.unit))
+        tr.insertCell().appendChild(document.createTextNode(p.time))
+        tr.insertCell().appendChild(document.createTextNode(p.place))
+
+
     }
-
-
-    const addMinTempHorData = p => {
-        const  trmih  = table_body2.appendChild(document.createElement('tr'))
+    const addMinTempData = p => {
+        const trmih = table_body2.appendChild(document.createElement('tr'))
         trmih.insertCell().appendChild(document.createTextNode(p.value))
         trmih.insertCell().appendChild(document.createTextNode(p.type))
         trmih.insertCell().appendChild(document.createTextNode(p.unit))
         trmih.insertCell().appendChild(document.createTextNode(p.time))
         trmih.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
-    }
-    const addMinTempAarData = p => {
-        const  trmia  = table_body2.appendChild(document.createElement('tr'))
-        trmia.insertCell().appendChild(document.createTextNode(p.value))
-        trmia.insertCell().appendChild(document.createTextNode(p.type))
-        trmia.insertCell().appendChild(document.createTextNode(p.unit))
-        trmia.insertCell().appendChild(document.createTextNode(p.time))
-        trmia.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
-    }
-    const addMinTempCphData = p => {
-        const  trmic  = table_body2.appendChild(document.createElement('tr'))
-        trmic.insertCell().appendChild(document.createTextNode(p.value))
-        trmic.insertCell().appendChild(document.createTextNode(p.type))
-        trmic.insertCell().appendChild(document.createTextNode(p.unit))
-        trmic.insertCell().appendChild(document.createTextNode(p.time))
-        trmic.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
-    }
 
 
-
-    const addMaxTempHorData = p => {
+    }
+    
+    const addMaxTempData = p => {
         const  trmxh  = table_body3.appendChild(document.createElement('tr'))
         trmxh.insertCell().appendChild(document.createTextNode(p.value))
         trmxh.insertCell().appendChild(document.createTextNode(p.type))
@@ -84,28 +63,6 @@ export default window => {
         
     }
     
-
-    const addMaxTempAarData = p => {
-        const  trmxa  = table_body3.appendChild(document.createElement('tr'))
-        trmxa.insertCell().appendChild(document.createTextNode(p.value))
-        trmxa.insertCell().appendChild(document.createTextNode(p.type))
-        trmxa.insertCell().appendChild(document.createTextNode(p.unit))
-        trmxa.insertCell().appendChild(document.createTextNode(p.time))
-        trmxa.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
-    }
-
-    const addMaxTempCphData = p => {
-        const  trmxc  = table_body3.appendChild(document.createElement('tr'))
-        trmxc.insertCell().appendChild(document.createTextNode(p.value))
-        trmxc.insertCell().appendChild(document.createTextNode(p.type))
-        trmxc.insertCell().appendChild(document.createTextNode(p.unit))
-        trmxc.insertCell().appendChild(document.createTextNode(p.time))
-        trmxc.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
-    }
 
     const addTotalPreData = p => {
         const  trt  = table_body4.appendChild(document.createElement('tr'))
@@ -118,7 +75,7 @@ export default window => {
         
         
     }
-    const addAverageWindHorData = p => {
+    const addAverageWindData = p => {
         const  trw  = table_body5.appendChild(document.createElement('tr'))
         trw.insertCell().appendChild(document.createTextNode(p.value))
         trw.insertCell().appendChild(document.createTextNode(p.type))
@@ -126,30 +83,6 @@ export default window => {
         trw.insertCell().appendChild(document.createTextNode(p.unit))
         trw.insertCell().appendChild(document.createTextNode(p.time))
         trw.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
-    }
-
-    const addAverageWindAarData = p => {
-        const  trA  = table_body5.appendChild(document.createElement('tr'))
-        trA.insertCell().appendChild(document.createTextNode(p.value))
-        trA.insertCell().appendChild(document.createTextNode(p.type))        
-        trA.insertCell().appendChild(document.createTextNode(p.direction))
-        trA.insertCell().appendChild(document.createTextNode(p.unit))
-        trA.insertCell().appendChild(document.createTextNode(p.time))
-        trA.insertCell().appendChild(document.createTextNode(p.place))
-        
-        
-    }
-
-    const addAverageWindCopData = p => {
-        const  trC  = table_body5.appendChild(document.createElement('tr'))
-        trC.insertCell().appendChild(document.createTextNode(p.value))
-        trC.insertCell().appendChild(document.createTextNode(p.type))        
-        trC.insertCell().appendChild(document.createTextNode(p.direction))
-        trC.insertCell().appendChild(document.createTextNode(p.unit))
-        trC.insertCell().appendChild(document.createTextNode(p.time))
-        trC.insertCell().appendChild(document.createTextNode(p.place))
         
         
     }
@@ -180,6 +113,8 @@ export default window => {
         trHp.insertCell().appendChild(document.createTextNode(p.from))
         trHp.insertCell().appendChild(document.createTextNode(p.to))
         trHp.insertCell().appendChild(document.createTextNode(p.type))
+        trHp.insertCell().appendChild(document.createTextNode(p.precipitation_types))
+        trHp.insertCell().appendChild(document.createTextNode(p.directions))
         trHp.insertCell().appendChild(document.createTextNode(p.unit))
         trHp.insertCell().appendChild(document.createTextNode(p.time))
         trHp.insertCell().appendChild(document.createTextNode(p.place))
@@ -187,26 +122,25 @@ export default window => {
         
     }
 
-   
-    const update = model => {
-      
-        model.weatherData().forEach(addData)
-        model.forecastData().forEach(addForecastData)
-        model.mintempHorData().forEach(addMinTempHorData)
-        model.mintempAarData().forEach(addMinTempAarData)
-        model.mintempCphData().forEach(addMinTempCphData)
-        model.maxtempHorData().forEach(addMaxTempHorData)
-        model.maxtempAarData().forEach(addMaxTempAarData)
-        model.maxtempCphData().forEach(addMaxTempCphData)
-        model.totalpreData().forEach(addTotalPreData)
-        model.avgWindHorData().forEach(addAverageWindHorData)
-        model.avgWindAarData().forEach(addAverageWindAarData)
-        model.avgWindCopData().forEach(addAverageWindCopData)
-        model.domWindData().forEach(addDominantWindData)
-        model.avgCloudData().forEach(addAverageCloudData)
-        model.hourlyPreData().forEach(addHourlyPredictionData)
+
+
+    const update = (latestDataHis, latestDataFor, finalformintemp,finalformaxtemp,finalfortotalpre,
+        finalfifthavgwind,finalforwinddirection,finalavgcloud,NextDayObject) => {
+       
+
+        latestDataHis.forEach(addWheatherData)
+        latestDataFor.forEach(addForecastData)
+        finalformintemp.forEach(addMinTempData)
+        finalformaxtemp.forEach(addMaxTempData)
+        finalfortotalpre.forEach(addTotalPreData)
+        finalfifthavgwind.forEach(addAverageWindData)
+        finalforwinddirection.forEach(addDominantWindData)
+        finalavgcloud.forEach(addAverageCloudData)
+        NextDayObject.forEach(addHourlyPredictionData)
+
     }
-    
- 
-    return { addData,update,listen, prompt }
+
+    return { addWheatherData,addForecastData,addMinTempData,addMaxTempData,addTotalPreData,addAverageWindData,
+        addDominantWindData,addAverageCloudData,addHourlyPredictionData,
+        update }
 }
